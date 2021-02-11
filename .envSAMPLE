@@ -1,2 +1,0 @@
-MONGODB_URL=mongodb://localhost:27017/mongo-database-url
-PORT=3000

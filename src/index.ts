@@ -1,6 +1,5 @@
 import express from 'express'
 import Gun from 'gun'
-import mongoose from 'mongoose'
 import { json } from 'body-parser'
 import { Config } from './config'
 
@@ -18,15 +17,6 @@ app.use('/test',testRouter)
 app.use('/gun', gunRouter)
 
 app.use(express.static('./public'))
-
-// Connect to MongoDB
-mongoose.connect(Config.mongoUrl, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, () => {
-  console.log("connected to database")
-})
 
 app.use(Gun).use(express.static(__dirname));
 
