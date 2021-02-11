@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "npm run build-dist && node ./dist/index.js",
-    "build-dist": "npm run tsc && cd ./app && npm run build",
-    "install-dep": "npm install && cd ./app && npm install"
+    "start": "npm run dist-build && node ./dist/index.js",
+    "dist-build": "npm run tsc && cd ./app && npm run build",
+    "deps": "npm install && cd ./app && npm install"
   },
   "repository": {
     "type": "git",
