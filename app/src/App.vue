@@ -1,17 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h5>Pretend this is a functional layout.</h5>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld,
+  components: {},
+  data: function() {
+    return {
+      username: "",
+      room: "",
+    };
+  },
+  methods: {
+    connect(username, room) {
+      this.username = username;
+      this.room = room;
+      console.log("connecting");
+      const chatroom = this.$gun.get(this.room);
+      if (chatroom) {
+        chatroom.map().on((node, key) => {
+          console.log(node + " " + key);
+        });
+      }
+      if (!chatroom) {
+        chatroom.put({ test: this.username }).on((node, key) => {
+          console.log(node + " " + key);
+        });
+      }
+    },
   },
 };
 </script>
@@ -23,6 +43,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

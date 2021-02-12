@@ -1,10 +1,12 @@
 <template>
   <div class="hello">
-    Hello
+    <!--
     <div>{{ testData }}</div>
     <div>{{ theData }}</div>
     <textarea v-model="testInput"></textarea>
     <button v-on:click="testFunction">Test Gun</button>
+    -->
+    Hello World
   </div>
 </template>
 

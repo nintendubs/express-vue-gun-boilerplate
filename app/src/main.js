@@ -1,14 +1,15 @@
 import Vue from "vue";
 import App from "./App.vue";
-import Gun from "./assets/gun.js";
+import store from "./store";
+import router from "./router";
+import $gun from "@/utils/gunHelper.js";
 
-Vue.prototype.$gun = new Gun("http://127.0.0.1:3030/gun");
+Vue.use($gun);
 
 Vue.config.productionTip = false;
 
 new Vue({
-  data: {
-    testData: [],
-  },
+  router,
+  store,
   render: (h) => h(App),
 }).$mount("#app");

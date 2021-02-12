@@ -16,12 +16,10 @@ app.use('/test',testRouter)
 // gun routes
 app.use('/gun', gunRouter)
 
-app.use(express.static('./public'))
-
-app.use(Gun).use(express.static(__dirname));
+app.use(express.static(__dirname + '/public'))
 
 const server = app.listen(Config.port, () => {
-  console.log("Server is live on port 3000")
+  console.log(`Server is live on port ${Config.port}`)
 })
 
 const gunServer = Gun({file: 'data.json', web: server})
