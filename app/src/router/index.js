@@ -9,6 +9,11 @@ const routes = [
     name: "Index",
     component: () => import("./routes/homepage"),
   },
+  {
+    path: "/chat/:id",
+    name: "Chat",
+    component: () => import("./routes/chat"),
+  },
 ];
 
 const router = new VueRouter({

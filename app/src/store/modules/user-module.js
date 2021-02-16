@@ -22,15 +22,23 @@ const actions = {
     console.log("logging in user");
     console.log(userData);
     console.log(commit);
-    $gun.user().auth(userData.username, userData.password, function(ack) {
-      console.log(ack);
-    });
+    $gun
+      .user()
+      .auth(userData.username, userData.password, function(ack) {
+        console.log(ack);
+      })
+      .recall({ sessionStorage: true });
+  },
+  async logoutUser() {
+    console.log("Logging out");
+    $gun.user().leave();
   },
 };
 
 const mutations = {};
 
 export default {
+  namespaced: true,
   state,
   getters,
   actions,

@@ -4,8 +4,10 @@
     <br />
     Password: <input v-model="password" />
     <br />
-    <button @click="register">Register</button
-    ><button @click="login">Login</button>
+    <button @click="register">Register</button>
+    <button @click="login">Login</button>
+    <button @click="logout">Logout</button>
+
     <br />
     <div v-if="username.length >= 1">{{ username }} is your username</div>
     <br />
@@ -24,7 +26,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["createUser", "loginUser"]),
+    ...mapActions({
+      createUser: "user/createUser",
+      loginUser: "user/loginUser",
+      logoutUser: "user/logoutUser",
+    }),
     register() {
       let userData = { username: this.username, password: this.password };
       this.createUser(userData);
@@ -32,6 +38,9 @@ export default {
     login() {
       let userData = { username: this.username, password: this.password };
       this.loginUser(userData);
+    },
+    logout() {
+      this.logoutUser();
     },
   },
 };

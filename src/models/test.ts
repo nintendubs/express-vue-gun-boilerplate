@@ -1,3 +1,4 @@
+/*
 import mongoose from 'mongoose'
 
 interface intTest {
@@ -37,3 +38,4 @@ Test.build({
 })
 
 export { Test }
+*/
