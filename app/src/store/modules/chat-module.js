@@ -49,22 +49,33 @@ const mutations = {
         state.roomList = arr;
       });
   },
-  setChat(state, id) {
+  async setChat(state, id) {
     let arr = [];
+    console.log("setting chat");
     console.log(id);
-    $gun
-      .get("messages")
-      .get(id)
-      .map((prop) => {
-        if (prop.id) return prop;
-      })
-      .on(function(data) {
-        console.log(data);
-        arr.push(data);
-      })
-      .then(() => {
-        state.messages = arr;
-      });
+    if (id) {
+      $gun
+        .get("messages")
+        .get(id)
+        .map((prop) => {
+          if (prop.id) return prop;
+          else state.messages = [];
+        })
+        .on(function(data) {
+          if (data) arr.push(data);
+          if (data === null) arr = [];
+        })
+        .then(() => {
+          state.messages = arr;
+        });
+    } else {
+      $gun
+        .get("messages")
+        .get(id)
+        .off();
+      state.messages = [];
+    }
+    console.log(state.messages);
   },
   sendMessage(state, data) {
     const message = messageFormat(data);

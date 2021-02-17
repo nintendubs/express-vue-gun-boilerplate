@@ -1,14 +1,24 @@
 <template>
   <div>
-    <button @click="createRoom">Create Room</button>
-    <div v-for="(room, index) in rooms" :key="index">
-      <router-link :to="{ name: 'Chat', params: { id: room.id } }">{{
-        room.name
-      }}</router-link>
-      <button v-if="room.id != null" @click="removeRoom(room.id)">X</button>
+    <vs-button @click="createRoom">Create Room</vs-button>
+
+    <div class="grid">
+      <vs-row justify="space-between" align="center">
+        <div v-for="(room, index) in rooms" :key="index">
+          <vs-card class="chatroom-card">
+            <template #title>
+              <h3>{{ room.name }}</h3>
+            </template>
+            <template #text>
+              <p>Just another chat room.</p>
+              <vs-button @click="goToChat(room.id)" danger icon>
+                Join Chat
+              </vs-button>
+            </template>
+          </vs-card>
+        </div>
+      </vs-row>
     </div>
-    <br />
-    <br />
   </div>
 </template>
 <script>
@@ -31,6 +41,11 @@ export default {
     removeRoom(value) {
       this.$store.dispatch("chat/removeRoom", value);
     },
+    goToChat(id) {
+      this.$router.push({ path: "/chat/" + id });
+    },
   },
 };
 </script>
+
+<style scoped></style>

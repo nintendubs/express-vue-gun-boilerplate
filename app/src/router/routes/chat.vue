@@ -1,13 +1,24 @@
 <template>
   <div>
-    Chat
-    <br />
     <div v-for="message in messages" :key="message.id">
-      {{ message.sender }} - {{ message.text }}
+      <vs-alert justifty="left" align="left">
+        <template #icon>
+          <i class="bx bxs-chat"></i>
+        </template>
+        <template #title>
+          {{ message.sender }}
+        </template>
+        {{ message.text }}
+      </vs-alert>
     </div>
-    <br />
-    <input v-model="newMessage" />
-    <button @click="sendMessage()">Send</button>
+    <div>
+      <vs-input icon-after v-model="newMessage">
+        <template #icon>
+          <i class="bx bx-lock-open-alt"></i>
+        </template>
+      </vs-input>
+      <vs-button @click="sendMessage()">Send</vs-button>
+    </div>
   </div>
 </template>
 <script>
@@ -20,9 +31,13 @@ export default {
       oldMessages: "",
     };
   },
-  mounted() {
+  created() {
     let id = this.$route.params.id;
+    console.log(id);
     this.$store.commit("chat/setChat", id);
+  },
+  unmounted() {
+    this.$store.commit("chat/setChat", null);
   },
   methods: {
     sendMessage() {
