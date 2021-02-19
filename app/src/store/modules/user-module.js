@@ -21,19 +21,18 @@ const actions = {
       context.commit("setUser", data);
     });
   },
+
   async loginUser({ commit }, userData) {
-    console.log("logging in user");
-    console.log(userData);
-    console.log(commit);
-    $gun
-      .user()
-      .auth(userData.username, userData.password, function(ack) {
-        if (ack.put.pub) {
-          let data = { alias: ack.put.alias, pub: ack.put.pub };
-          commit("setUser", data);
-        }
-      })
-      .recall({ sessionStorage: true });
+    const user = $gun.user();
+
+    user.auth(userData.username, userData.password, function(ack) {
+      if (ack.put.pub) {
+        let data = { alias: ack.put.alias, pub: ack.put.pub };
+        commit("setUser", data);
+      }
+    });
+
+    user.recall({ sessionStorage: true });
   },
   async logoutUser({ commit }) {
     console.log("Logging out");
@@ -49,6 +48,7 @@ const mutations = {
       state.user.alias = data.alias;
       state.user.pub = data.pub;
       state.signedIn = true;
+      router.push("/chatrooms");
     } else {
       state.user = {};
       state.signedIn = false;

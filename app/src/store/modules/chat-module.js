@@ -49,7 +49,7 @@ const mutations = {
         state.roomList = arr;
       });
   },
-  async setChat(state, id) {
+  setChat(state, id) {
     let arr = [];
     console.log("setting chat");
     console.log(id);
@@ -58,10 +58,13 @@ const mutations = {
         .get("messages")
         .get(id)
         .map((prop) => {
+          console.log("prop");
+          console.log(prop);
           if (prop.id) return prop;
           else state.messages = [];
         })
-        .on(function(data) {
+        .once(function(data) {
+          console.log(data);
           if (data) arr.push(data);
           if (data === null) arr = [];
         })

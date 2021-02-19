@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ signedIn }}
     <div v-for="message in messages" :key="message.id">
       <vs-alert justifty="left" align="left">
         <template #icon>
@@ -12,15 +13,24 @@
       </vs-alert>
     </div>
     <div>
-      <vs-input icon-after v-model="newMessage">
-        <template #icon>
-          <i class="bx bx-lock-open-alt"></i>
-        </template>
-      </vs-input>
-      <vs-button @click="sendMessage()">Send</vs-button>
+      <vs-row :w="fullwidth">
+        <vs-col w="11">
+          <vs-input id="chat-input" v-model="newMessage" />
+        </vs-col>
+        <vs-col w="1">
+          <vs-button @click="sendMessage()">Send</vs-button>
+        </vs-col>
+      </vs-row>
     </div>
   </div>
 </template>
+
+<style>
+#chat-input input {
+  width: 100%;
+}
+</style>
+
 <script>
 import { mapGetters } from "vuex";
 export default {
@@ -29,12 +39,11 @@ export default {
     return {
       newMessage: "",
       oldMessages: "",
+      fullwidth: 12,
     };
   },
-  created() {
-    let id = this.$route.params.id;
-    console.log(id);
-    this.$store.commit("chat/setChat", id);
+  mounted() {
+    this.setChat();
   },
   unmounted() {
     this.$store.commit("chat/setChat", null);
@@ -49,9 +58,15 @@ export default {
       };
       this.$store.commit("chat/sendMessage", data);
     },
+    setChat() {
+      let id = this.$route.params.id;
+      console.log("mounted");
+      console.log(id);
+      this.$store.commit("chat/setChat", id);
+    },
   },
   computed: {
-    ...mapGetters({ messages: "chat/getMessages" }),
+    ...mapGetters({ messages: "chat/getMessages", signedIn: "user/signedIn" }),
   },
 };
 </script>

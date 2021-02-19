@@ -6,32 +6,39 @@
       </template>
       <template #text>
         <div class="center content-inputs">
-          <vs-input border v-model="username" placeholder="Username">
-            <template #icon>
-              <i class="bx bx-user"></i>
-            </template>
-          </vs-input>
-          <vs-input
-            border
-            type="password"
-            v-model="password"
-            placeholder="Password"
+          <form
+            v-on:submit.prevent="'/login' ? login() : register()"
+            class="form"
           >
-            <template #icon>
-              <i class="bx bx-lock-open-alt"></i>
-            </template>
-          </vs-input>
-          <vs-input
-            v-if="route === '/register'"
-            border
-            type="password"
-            v-model="passwordConfirm"
-            placeholder="Confirm Password"
-          >
-            <template #icon>
-              <i class="bx bx-lock-open-alt"></i>
-            </template>
-          </vs-input>
+            <vs-input border v-model="username" placeholder="Username">
+              <template #icon>
+                <i class="bx bx-user"></i>
+              </template>
+            </vs-input>
+            <vs-input
+              border
+              type="password"
+              v-model="password"
+              placeholder="Password"
+              @keyup.enter="submitAuthForm"
+            >
+              <template #icon>
+                <i class="bx bx-lock-open-alt"></i>
+              </template>
+            </vs-input>
+            <vs-input
+              v-if="route === '/register'"
+              border
+              type="password"
+              v-model="passwordConfirm"
+              placeholder="Confirm Password"
+              @keyup.enter="submitAuthForm"
+            >
+              <template #icon>
+                <i class="bx bx-lock-open-alt"></i>
+              </template>
+            </vs-input>
+          </form>
         </div>
       </template>
       <template #buttons>
@@ -70,6 +77,14 @@ export default {
       createUser: "user/createUser",
       loginUser: "user/loginUser",
     }),
+    submitAuthForm() {
+      if (this.route === "/login") {
+        this.login();
+      }
+      if (this.route === "/register") {
+        this.register();
+      }
+    },
     register() {
       let userData = { username: this.username, password: this.password };
       this.createUser(userData);

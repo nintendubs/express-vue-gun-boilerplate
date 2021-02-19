@@ -5,6 +5,7 @@
         <vs-sidebar v-model="active" background="primary" textWhite open>
           <template #logo>
             Vue + GunDB Chat
+            <br />
           </template>
           <div v-if="signedIn">
             <vs-sidebar-item textWhite id="Home" :to="{ path: '/' }">
